@@ -49,6 +49,7 @@ const userRegister = async (userDets, role, res) => {
       },
       (error, result, fullResult) => {
         if (error) {
+          console.log(error);
           return res.json({
             messege: {
               msg: "gmail sent problem",

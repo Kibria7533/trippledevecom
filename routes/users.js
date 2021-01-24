@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../model/Users");
 const { check, body, validationResult } = require("express-validator");
+
 const {
   userRegister,
   userLogin,
@@ -17,11 +18,6 @@ router.post(
     return true;
   }),
   [
-    check("password")
-      .isLength({ min: 5 })
-      .withMessage("must be at least 5 chars long")
-      .matches(/\d/)
-      .withMessage("must contain a number"),
     body("fullname").isLength({ min: 3 }).withMessage("Name is required."),
     body("username").isLength({ min: 3 }).withMessage("username is required."),
 
@@ -31,13 +27,18 @@ router.post(
       .isEmail()
       .withMessage("Please provide a valid email address"),
 
-    body("mobile")
+    body("Mobile")
       .isLength({ min: 11 })
       .withMessage("Mobile number is required.")
       .matches(/\d/)
       .withMessage("must contain a number"),
 
-    body("address").isLength({ min: 1 }).withMessage("address is required."),
+    body("Address").isLength({ min: 1 }).withMessage("address is required."),
+    check("password")
+      .isLength({ min: 5 })
+      .withMessage("Password must be at least 5 chars long")
+      .matches(/\d/)
+      .withMessage("must contain a number"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
